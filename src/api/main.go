@@ -35,12 +35,12 @@ func getUrl(endpoint string, params []interfaces.Param) string {
 	return timb_url.String()
 }
 
-func reqGet(w http.ResponseWriter, endpoint string) []byte {
+func reqGet(w http.ResponseWriter, endpoint string) ([]byte, interfaces.ResponseDetail) {
 	req, err := http.Get(endpoint)
 
 	if err != nil {
-		log.Printf("The HTTP request failed with error %s\n", err)
-		errorResponse(500, "Service not available", w)
+		log.Printf("Error %s \n", err)
+		return nil, interfaces.ResponseDetail{Code: 1100, Message: "Bad request"}
 	}
 
 	if req.StatusCode == 200 {
@@ -50,13 +50,13 @@ func reqGet(w http.ResponseWriter, endpoint string) []byte {
 			log.Fatal(dataErr)
 		}
 
-		return data
+		return data, interfaces.ResponseDetail{Code: 1200, Message: "OK"}
 	} else {
 		log.Printf("The HTTP request failed with error %s \n", err)
 		// errorResponse(int16(req.StatusCode), "Service not available", w)
 	}
 
-	return nil
+	return nil, interfaces.ResponseDetail{Code: 1300, Message: "Service unavailable"}
 }
 
 func popular(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +83,16 @@ func popular(w http.ResponseWriter, r *http.Request) {
 	endpoint := getUrl("movie/popular", params)
 
 	// Request to movie popular endpoint
-	reqGet(w, endpoint)
+	req, detail := reqGet(w, endpoint)
+
+	if req == nil {
+		errorResponse(detail.Code, detail.Message, w)
+		return
+	}
+
+	var responseObj interfaces.PopularMovies
+	_ = json.Unmarshal(req, &responseObj)
+	_ = json.NewEncoder(w).Encode(responseObj)
 }
 
 func movieDetail(w http.ResponseWriter, r *http.Request) {
@@ -100,10 +109,10 @@ func movieDetail(w http.ResponseWriter, r *http.Request) {
 	params = append(params, idParam)
 	endpoint := getUrl("movie/"+id[0], params)
 
-	req := reqGet(w, endpoint)
+	req, detail := reqGet(w, endpoint)
 
 	if req == nil {
-		errorResponse(500, "Service not available", w)
+		errorResponse(detail.Code, detail.Message, w)
 		return
 	}
 
