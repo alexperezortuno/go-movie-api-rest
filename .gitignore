@@ -14,3 +14,4 @@
 bin/*
 !bin/.gitkeep
 pkg/*
+src/github.com/*
