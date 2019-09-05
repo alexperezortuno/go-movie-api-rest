@@ -1,4 +1,4 @@
-package interfaces
+package types
 
 type MovieDetail struct {
 	Homepage         string  `json:"homepage"`

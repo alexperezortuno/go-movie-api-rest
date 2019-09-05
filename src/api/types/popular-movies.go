@@ -1,4 +1,4 @@
-package interfaces
+package types
 
 type PopularMovies struct {
 	Page         int       `json:"page"`

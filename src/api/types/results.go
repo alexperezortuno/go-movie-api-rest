@@ -1,4 +1,4 @@
-package interfaces
+package types
 
 type Results struct {
 	Popularity  float32 `json:"popularity"`
