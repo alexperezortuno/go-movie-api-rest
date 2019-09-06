@@ -1,7 +1,7 @@
-package api
+package v1
 
 import (
-	"api/types"
+	"api/v1/types"
 	"encoding/json"
 	"log"
 	"net/http"
