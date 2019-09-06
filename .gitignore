@@ -15,3 +15,5 @@ bin/*
 !bin/.gitkeep
 pkg/*
 src/github.com/*
+src/gopkg.in/*
+image-build.log

@@ -1,0 +1,17 @@
+version: '3.3'
+
+services:
+  movie-api-application:
+    image: alexperezortuno/go-apps:movie-api
+    ports:
+      - 8090:8090
+    environment:
+      - "API_KEY=3469452a62f958bda4b32aba85bc77e4"
+      - "TIMDB_URL=https://api.themoviedb.org/3/"
+      - "LOG_FILE_LOCATION=/go/logs/api_movie"
+    networks:
+      - godocker
+
+networks:
+  godocker:
+    driver: bridge
