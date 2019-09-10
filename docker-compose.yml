@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   movie-api-application:
-    image: alexperezortuno/go-apps:movie-api
+    image: dockeraccount/go-apps:movie-api
     ports:
       - 8090:8090
     environment:
