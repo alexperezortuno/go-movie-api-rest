@@ -6,7 +6,7 @@ services:
     ports:
       - 8090:8090
     environment:
-      - "API_KEY=3469452a62f958bda4b32aba85bc77e4"
+      - "API_KEY=APIKEY"
       - "TIMDB_URL=https://api.themoviedb.org/3/"
       - "LOG_FILE_LOCATION=/go/logs/api_movie"
     networks:
